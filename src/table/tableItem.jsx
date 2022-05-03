@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class TableItem extends Component {
   state = {
@@ -8,6 +12,7 @@ class TableItem extends Component {
   };
 
   componentDidMount = () => {
+    this.setState({ item: this.props.item });
     if (this.props.editMode) {
       this.switchToEditMode({});
     }
@@ -29,8 +34,8 @@ class TableItem extends Component {
   };
 
   render() {
-    const { done, editMode } = this.state;
-    const { item, handleDeleteItem } = this.props;
+    const { item, done, editMode } = this.state;
+    const { handleDeleteItem } = this.props;
 
     return (
       <tr>
@@ -44,7 +49,7 @@ class TableItem extends Component {
         </td>
         <td>
           {editMode ? (
-            <input onChange={this.handleOnChange} name="name" value={this.state.item.name}></input>
+            <input onChange={this.handleOnChange} name="name" value={item.name}></input>
           ) : (
             item.name
           )}
@@ -54,7 +59,7 @@ class TableItem extends Component {
             <input
               onChange={this.handleOnChange}
               name="description"
-              value={this.state.item.description}
+              value={item.description}
             ></input>
           ) : (
             item.description
@@ -62,11 +67,15 @@ class TableItem extends Component {
         </td>
         <td>
           {editMode ? (
-            <input
-              onChange={this.handleOnChange}
+            <DatePicker
+              onChange={date => {
+                let item = this.state.item;
+                item.dueDate = new Date(date).toISOString().slice(0, 10);
+                this.setState(item);
+              }}
               name="dueDate"
-              value={this.state.item.dueDate}
-            ></input>
+              selected={new Date(item.dueDate)}
+            />
           ) : (
             item.dueDate
           )}

@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Input from "./input";
 import { login } from "../services/authService";
+import Error from "../error";
 
 class Login extends Component {
   state = {
     account: { username: "", password: "" },
-    isSignedUp: false
+    isSignedUp: false,
+    error: false
   };
+
   handleSubmit = async e => {
     e.preventDefault();
     const { account } = this.state;
@@ -17,7 +20,9 @@ class Login extends Component {
           this.setState({ isSignedUp: true });
         }
       })
-      .catch(error => alert("wrong password"));
+      .catch(error => {
+        this.setState({ error: true });
+      });
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -43,6 +48,7 @@ class Login extends Component {
         <div>
           <h1>Login</h1>
           <form onSubmit={this.handleSubmit}>
+            {this.state.error === true ? <Error /> : null}
             <Input
               name="username"
               label="username"

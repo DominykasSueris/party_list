@@ -4,6 +4,7 @@ import axios from "axios";
 import TableBody from "./tableBody";
 import Pagination from "../pagination/pagination";
 import { paginate } from "../pagination/paginate";
+import Error from "../error";
 import "../App.css";
 
 class Table extends Component {
@@ -18,14 +19,15 @@ class Table extends Component {
       dueDate: ""
     },
     isAbleToCreateNew: true,
-    auth: {}
+    auth: {},
+    error: false
   };
 
   componentDidMount = async () => {
     const { data: items } = await axios
       .get(config.apiEndPoint, { auth: this.props.location.state })
       .then(this.setState({ auth: { auth: this.props.location.state } }))
-      .catch(error => alert("data not recieved"));
+      .catch(error => this.setState({ error: true }));
     this.setState({ items });
   };
 
@@ -60,7 +62,6 @@ class Table extends Component {
 
   saveItem = (item, isNewItem) => {
     const { auth } = this.state;
-
     if (isNewItem) {
       axios
         .post(config.apiEndPoint, item, auth)
@@ -112,6 +113,7 @@ class Table extends Component {
     return (
       <React.Fragment>
         <div className="main-table">
+          {this.state.error === true ? <Error /> : null}
           <TableBody
             items={items}
             updateButton={updateButton}
@@ -133,6 +135,7 @@ class Table extends Component {
             </button>
           ) : null}
         </div>
+        <div></div>
       </React.Fragment>
     );
   }
