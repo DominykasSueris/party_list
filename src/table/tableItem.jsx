@@ -8,11 +8,17 @@ class TableItem extends Component {
   state = {
     editMode: false,
     done: true,
-    item: []
+    item: {
+      name: "",
+      description: "",
+      dueDate: new Date()
+    }
   };
 
   componentDidMount = () => {
-    this.setState({ item: this.props.item });
+    let item = this.props.item;
+    item.dueDate = new Date(item.dueDate);
+    this.setState({ item: item });
     if (this.props.editMode) {
       this.switchToEditMode({});
     }
@@ -70,14 +76,15 @@ class TableItem extends Component {
             <DatePicker
               onChange={date => {
                 let item = this.state.item;
-                item.dueDate = new Date(date).toISOString().slice(0, 10);
+                item.dueDate = date;
                 this.setState(item);
               }}
               name="dueDate"
-              selected={new Date(item.dueDate)}
+              selected={item.dueDate}
+              dateFormat="yyyy-MM-dd"
             />
           ) : (
-            item.dueDate
+            item.dueDate.toISOString().slice(0, 10)
           )}
         </td>
         <td>{item.done}</td>

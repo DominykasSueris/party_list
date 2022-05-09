@@ -12,7 +12,7 @@ class Table extends Component {
     items: [],
     currentPage: 1,
     pageSize: 4,
-    sort: "asd",
+    sort: "asc",
     party: {
       name: "",
       description: "",
@@ -39,7 +39,7 @@ class Table extends Component {
       id: "",
       name: "",
       description: "",
-      dueDate: ""
+      dueDate: new Date()
     };
     const items = this.state.items;
     items.push(newItem);
