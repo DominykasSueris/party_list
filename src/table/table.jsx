@@ -14,7 +14,7 @@ class Table extends Component {
     pageSize: 4,
     sort: "asd",
     party: {
-      name: "ddd",
+      name: "",
       description: "",
       dueDate: ""
     },
