@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 import Input from "./input";
 import { login } from "../services/authService";
 import Error from "../error";
+import Spiner from "../spiner";
 
 class Login extends Component {
   state = {
@@ -17,7 +18,7 @@ class Login extends Component {
     await login(account.username, account.password)
       .then(res => {
         if (res.status === 200) {
-          this.setState({ isSignedUp: true });
+          this.setState({ isSignedUp: true, isLoading: false });
         }
       })
       .catch(error => {
@@ -36,12 +37,15 @@ class Login extends Component {
 
     if (isSignedUp) {
       return (
-        <Redirect
-          to={{
-            pathname: "/home",
-            state: { username: account.username, password: account.password }
-          }}
-        />
+        <React.Fragment>
+          <Redirect
+            to={{
+              pathname: "/home",
+              state: { username: account.username, password: account.password }
+            }}
+          />
+          <Spiner />
+        </React.Fragment>
       );
     } else {
       return (
