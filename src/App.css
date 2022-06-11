@@ -1,12 +1,11 @@
-.table {
-  margin: auto;
-  text-align: center;
-}
-
 .add-form {
   text-align: center;
 }
-
 .main-pagination {
   justify-content: center;
+}
+
+.container {
+  margin-top: 5%;
+  width: 70%;
 }

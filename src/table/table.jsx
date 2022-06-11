@@ -5,6 +5,7 @@ import TableBody from "./tableBody";
 import Pagination from "../pagination/pagination";
 import { paginate } from "../pagination/paginate";
 import Error from "../error";
+import Spiner from "../spiner";
 import "../App.css";
 
 class Table extends Component {
@@ -20,7 +21,8 @@ class Table extends Component {
     },
     isAbleToCreateNew: true,
     auth: {},
-    error: false
+    error: false,
+    loading: true
   };
 
   componentDidMount = async () => {
@@ -28,7 +30,7 @@ class Table extends Component {
       .get(config.apiEndPoint, { auth: this.props.location.state })
       .then(this.setState({ auth: { auth: this.props.location.state } }))
       .catch(error => this.setState({ error: true }));
-    this.setState({ items });
+    this.setState({ items, loading: false });
   };
 
   handleAddItem = e => {
@@ -110,7 +112,9 @@ class Table extends Component {
 
     const items = paginate(allItems, currentPage, pageSize);
 
-    return (
+    return this.state.loading ? (
+      <Spiner />
+    ) : (
       <React.Fragment>
         <div className="main-table">
           {this.state.error === true ? <Error /> : null}
@@ -122,20 +126,20 @@ class Table extends Component {
             saveItem={this.saveItem}
             onSort={this.handleSort}
             sort={sort}
-          />
-          <Pagination
+            isAbleToCreateNew={isAbleToCreateNew}
+            handleAddItem={this.handleAddItem}
             itemsCount={count}
             currentPage={currentPage}
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
           />
-          {isAbleToCreateNew ? (
-            <button className="btn btn-primary" onClick={this.handleAddItem}>
-              Add
-            </button>
-          ) : null}
         </div>
-        <div></div>
+        <Pagination
+          itemsCount={count}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          onPageChange={this.handlePageChange}
+        />
       </React.Fragment>
     );
   }

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./table.css";
 
 class TableItem extends Component {
   state = {
@@ -87,8 +87,7 @@ class TableItem extends Component {
             item.dueDate.toISOString().slice(0, 10)
           )}
         </td>
-        <td>{item.done}</td>
-        <td>
+        <td id="action-buttons">
           {editMode ? (
             <button className="btn btn-warning" onClick={this.save}>
               Save
@@ -98,8 +97,6 @@ class TableItem extends Component {
               Edit
             </button>
           )}
-        </td>
-        <td>
           <button className="btn btn-danger" onClick={() => handleDeleteItem(item.id)}>
             Delete
           </button>

@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import TableItem from "./tableItem";
+import Table from "react-bootstrap/Table";
 import { GoTriangleDown } from "react-icons/go";
 import { GoTriangleUp } from "react-icons/go";
+import "./table.css";
 
 class TableBody extends Component {
   render() {
-    const { items, task, handleDeleteItem, saveItem, onSort, sort } = this.props;
+    const { items, task, handleDeleteItem, saveItem, onSort, sort, isAbleToCreateNew } = this.props;
+
     return (
       <React.Fragment>
-        <table className="table table-striped w-auto">
+        <Table bordered>
           <thead>
             <tr>
-              <th>id</th>
-              <th>checkbox</th>
+              <th>Number</th>
+              <th>Check</th>
               <th onClick={() => onSort("name")} sort={sort}>
                 {sort === "asc" ? (
                   <span>
@@ -26,8 +29,9 @@ class TableBody extends Component {
                 Name
               </th>
 
-              <th>description</th>
-              <th>date</th>
+              <th>Surname</th>
+              <th>Check in date</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -42,8 +46,17 @@ class TableBody extends Component {
                 handleDeleteItem={handleDeleteItem}
               ></TableItem>
             ))}
+            <tr>
+              <td colSpan="6" className="right">
+                {isAbleToCreateNew ? (
+                  <button className="btn btn-primary" onClick={this.handleAddItem}>
+                    Add
+                  </button>
+                ) : null}
+              </td>
+            </tr>
           </tbody>
-        </table>
+        </Table>
       </React.Fragment>
     );
   }

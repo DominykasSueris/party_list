@@ -3,7 +3,6 @@ import { Redirect } from "react-router";
 import Input from "./input";
 import { login } from "../services/authService";
 import Error from "../error";
-import Spiner from "../spiner";
 
 class Login extends Component {
   state = {
@@ -44,7 +43,6 @@ class Login extends Component {
               state: { username: account.username, password: account.password }
             }}
           />
-          <Spiner />
         </React.Fragment>
       );
     } else {
