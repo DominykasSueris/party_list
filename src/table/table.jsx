@@ -12,7 +12,7 @@ class Table extends Component {
   state = {
     items: [],
     currentPage: 1,
-    pageSize: 4,
+    pageSize: 8,
     sort: "asc",
     party: {
       name: "",
