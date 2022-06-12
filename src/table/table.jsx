@@ -5,7 +5,7 @@ import TableBody from "./tableBody";
 import Pagination from "../pagination/pagination";
 import { paginate } from "../pagination/paginate";
 import Error from "../error";
-import Spiner from "../spiner";
+import Spiner from "../spinner/spinner";
 import "./table.css";
 
 class Table extends Component {
