@@ -7,7 +7,16 @@ import "./table.css";
 
 class TableBody extends Component {
   render() {
-    const { items, task, handleDeleteItem, saveItem, onSort, sort, isAbleToCreateNew } = this.props;
+    const {
+      items,
+      task,
+      handleDeleteItem,
+      saveItem,
+      onSort,
+      sort,
+      isAbleToCreateNew,
+      handleAddItem
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -49,7 +58,7 @@ class TableBody extends Component {
             <tr>
               <td colSpan="6" className="right">
                 {isAbleToCreateNew ? (
-                  <button className="btn btn-primary" onClick={this.handleAddItem}>
+                  <button className="btn btn-primary" onClick={handleAddItem}>
                     Add
                   </button>
                 ) : null}
