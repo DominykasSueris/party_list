@@ -62,28 +62,39 @@ class Table extends Component {
       .catch(error => alert("Something went wrong "));
   };
 
-  saveItem = (item, isNewItem) => {
-    const { auth } = this.state;
-    if (isNewItem) {
-      axios
-        .post(config.apiEndPoint, item, auth)
-        .then(response => {
-          const items = [response.data, ...this.state.items];
-          this.setState({ items: items.filter(i => i.id !== ""), isAbleToCreateNew: true });
-        })
-        .catch(error => alert("Item is not saved"));
+  handleSaveItem = item => {
+    const index = this.state.items.findIndex(oldItem => item.id === oldItem.id);
+    if (index !== -1) {
+      const items = this.state.items;
+      items[index] = item;
+      this.setState({ items });
     } else {
-      axios
-        .put(`${config.apiEndPoint}/${item.id}`, item, auth)
-        .then(response => {
-          const index = this.state.items.findIndex(oldItem => item.id === oldItem.id);
-          const items = this.state.items;
-          items[index] = response.data;
-          this.setState({ items });
-        })
-        .catch(error => alert("something went wrong"));
+      this.state.items.push(item);
     }
   };
+
+  // saveItem = (item, isNewItem) => {
+  //   const { auth } = this.state;
+  //   if (isNewItem) {
+  //     axios
+  //       .post(config.apiEndPoint, item, auth)
+  //       .then(response => {
+  //         const items = [response.data, ...this.state.items];
+  //         this.setState({ items: items.filter(i => i.id !== ""), isAbleToCreateNew: true });
+  //       })
+  //       .catch(error => alert("Item is not saved"));
+  //   } else {
+  //     axios
+  //       .put(`${config.apiEndPoint}/${item.id}`, item, auth)
+  //       .then(response => {
+  //         const index = this.state.items.findIndex(oldItem => item.id === oldItem.id);
+  //         const items = this.state.items;
+  //         items[index] = response.data;
+  //         this.setState({ items });
+  //       })
+  //       .catch(error => alert("something went wrong"));
+  //   }
+  // };
 
   handlePageChange = page => {
     this.setState({ currentPage: page });
@@ -132,6 +143,7 @@ class Table extends Component {
             currentPage={currentPage}
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
+            handleSaveItem={this.handleSaveItem}
           />
 
           <Pagination

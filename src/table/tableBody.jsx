@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Form from "../form/form";
 import TableItem from "./tableItem";
 import Table from "react-bootstrap/Table";
 import { GoTriangleDown } from "react-icons/go";
@@ -15,7 +16,8 @@ class TableBody extends Component {
       onSort,
       sort,
       isAbleToCreateNew,
-      handleAddItem
+      handleAddItem,
+      handleSaveItem
     } = this.props;
 
     return (
@@ -52,17 +54,20 @@ class TableBody extends Component {
               task={task}
               saveItem={saveItem}
               handleDeleteItem={handleDeleteItem}
+              handleSaveItem={handleSaveItem}
             ></TableItem>
           ))}
-          <tr>
-            <td colSpan="6" className="right">
-              {isAbleToCreateNew ? (
+          {isAbleToCreateNew ? (
+            <tr>
+              <td colSpan="6" className="right">
                 <button className="btn btn-primary" onClick={handleAddItem}>
                   Add
                 </button>
-              ) : null}
-            </td>
-          </tr>
+              </td>
+            </tr>
+          ) : (
+            <Form handleSaveItem={handleSaveItem} />
+          )}
         </tbody>
       </Table>
     );

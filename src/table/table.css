@@ -16,7 +16,7 @@
   text-align: end;
 }
 
-#action-buttons {
+.action-buttons {
   width: 1%;
   white-space: nowrap;
   text-align: end;
