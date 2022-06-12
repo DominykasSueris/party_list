@@ -6,7 +6,7 @@ import Pagination from "../pagination/pagination";
 import { paginate } from "../pagination/paginate";
 import Error from "../error";
 import Spiner from "../spiner";
-import "../App.css";
+import "./table.css";
 
 class Table extends Component {
   state = {
@@ -133,13 +133,14 @@ class Table extends Component {
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
           />
+
+          <Pagination
+            itemsCount={count}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onPageChange={this.handlePageChange}
+          />
         </div>
-        <Pagination
-          itemsCount={count}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          onPageChange={this.handlePageChange}
-        />
       </React.Fragment>
     );
   }

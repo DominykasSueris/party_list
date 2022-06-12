@@ -1,0 +1,10 @@
+.paggination-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 8px;
+}
+
+.paggination-nav:hover {
+  cursor: pointer;
+}
