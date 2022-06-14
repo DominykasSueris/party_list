@@ -4,47 +4,52 @@ import DatePicker from "react-datepicker";
 import axios from "axios";
 import config from "../services/config.json";
 
-const Form = ({ item, handleSaveItem }) => {
-  const newItem = { done: false, name: "", description: "", date: "" };
-  const edit = !!item;
-  item = item ? item : newItem;
-  const [done, setDone] = useState(item.done);
-  const [name, setName] = useState(item.name);
-  const [description, setDescription] = useState(item.description);
-  const [date, setDate] = useState(item.dueDate);
+const Form = ({ party, backFunction, setPartyList, partyList }) => {
+  const newParty = { done: false, name: "", description: "", dueDate: "" };
+  const isEdit = !!party;
+  party = party ? party : newParty;
+
+  const [done, setDone] = useState(party.done);
+  const [name, setName] = useState(party.name);
+  const [description, setDescription] = useState(party.description);
+  const [date, setDate] = useState(party.dueDate);
 
   useEffect(() => {
-    item.done = done;
-    item.name = name;
-    item.description = description;
-    item.date = date;
-  }, [item, done, name, description, date]);
+    party.done = done;
+    party.name = name;
+    party.description = description;
+    party.dueDate = date;
+  }, [party, done, name, description, date]);
 
   const location = useLocation();
   const auth = { auth: location.state };
 
   const save = () => {
-    console.log(auth);
-    if (!edit) {
+    if (isEdit) {
       axios
-        .post(config.apiEndPoint, item, auth)
+        .put(`${config.apiEndPoint}/${party.id}`, party, auth)
         .then(response => {
-          handleSaveItem(response.data);
-        })
-        .catch(error => alert("Item is not saved"));
-    } else {
-      axios
-        .put(`${config.apiEndPoint}/${item.id}`, item, auth)
-        .then(response => {
-          handleSaveItem(response.data);
+          const index = partyList.findIndex(editedParty => response.data.id === editedParty.id);
+          partyList[index] = response.data;
+          setPartyList(partyList);
+          backFunction(false);
         })
         .catch(error => alert("something went wrong"));
+    } else {
+      //new party save
+      axios
+        .post(config.apiEndPoint, party, auth)
+        .then(res => {
+          setPartyList([...partyList, res.data]);
+          backFunction(false);
+        })
+        .catch(error => alert("party is not saved"));
     }
   };
 
   return (
     <tr>
-      <td>{item.id}</td>
+      <td>{party.id}</td>
       <td>
         <input type="checkbox" value={done} onClick={() => setDone(!done)} />
       </td>
@@ -60,16 +65,18 @@ const Form = ({ item, handleSaveItem }) => {
       </td>
       <td>
         <DatePicker
-          onChange={date => setDate(date)}
+          onChange={date => setDate(date.toISOString().slice(0, 10))}
           name="dueDate"
-          selected={date}
+          selected={Date.parse(date)}
           dateFormat="yyyy-MM-dd"
         />
       </td>
-      <td id="action-buttons">
-        {/* <button className="btn btn-warning" onClick={this.save}> */}
+      <td className="action-buttons">
         <button className="btn btn-warning" onClick={save}>
           Save
+        </button>
+        <button className="btn btn-warning" onClick={() => backFunction(false)}>
+          Back
         </button>
       </td>
     </tr>

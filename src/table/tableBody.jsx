@@ -47,11 +47,8 @@ class TableBody extends Component {
         <tbody>
           {items.map(item => (
             <TableItem
-              editMode={item.editMode}
-              isNewItem={item.isNewItem}
               key={item.id}
               item={item}
-              task={task}
               saveItem={saveItem}
               handleDeleteItem={handleDeleteItem}
               handleSaveItem={handleSaveItem}
