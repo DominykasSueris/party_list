@@ -36,7 +36,6 @@ const Form = ({ party, backFunction, setPartyList, partyList }) => {
         })
         .catch(error => alert("something went wrong"));
     } else {
-      //new party save
       axios
         .post(config.apiEndPoint, party, auth)
         .then(res => {

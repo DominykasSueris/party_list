@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import Party from "./party";
 import Form from "../form/form";
-//Todo update css
+import "react-datepicker/dist/react-datepicker.css";
 import "../table/table.css";
 
 const PartyList = ({ partyList, setPartyList }) => {
