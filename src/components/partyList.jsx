@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Table from "react-bootstrap/Table";
 import Party from "./party";
 import Form from "../form/form";
+import { GoTriangleDown } from "react-icons/go";
+import { GoTriangleUp } from "react-icons/go";
 import "react-datepicker/dist/react-datepicker.css";
 import "../table/table.css";
 
-const PartyList = ({ partyList, setPartyList }) => {
+const PartyList = ({ partyList, setPartyList, sorting, isSorted }) => {
   const [isFormVisible, setFormVisible] = useState(false);
 
   return (
@@ -14,7 +16,18 @@ const PartyList = ({ partyList, setPartyList }) => {
         <tr>
           <th>Number</th>
           <th>Check</th>
-          <th>Name</th>
+          <th onClick={() => sorting()}>
+            {isSorted === true ? (
+              <span>
+                <GoTriangleUp />
+              </span>
+            ) : (
+              <span>
+                <GoTriangleDown />
+              </span>
+            )}
+            Name
+          </th>
           <th>Surname</th>
           <th>Date</th>
           <th>Action</th>
