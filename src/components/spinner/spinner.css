@@ -13,3 +13,11 @@
   width: 3rem;
   height: 3rem;
 }
+
+.spinner-border checkbox {
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

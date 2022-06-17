@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import config from "../../services/config.json";
 import { useLocation } from "react-router-dom";
+import Spinner from "../spinner/spinner";
 import Form from "../form/form";
 
 const Party = ({ party, partyList, setPartyList }) => {
   const [isEditMode, setEditMode] = useState(false);
   const [done, setDone] = useState(party.done);
+  const [isLoading, setLoading] = useState(false);
   const location = useLocation();
   const auth = { auth: location.state };
 
@@ -18,11 +20,13 @@ const Party = ({ party, partyList, setPartyList }) => {
   };
 
   const handleCheckboxChange = () => {
+    setLoading(true);
     party.done = !done;
     axios
       .put(`${config.apiEndPoint}/${party.id}`, party, auth)
       .then(response => {
         setDone(response.data.done);
+        setLoading(false);
       })
       .catch(error => alert("something went wrong"));
   };
@@ -40,7 +44,11 @@ const Party = ({ party, partyList, setPartyList }) => {
         <tr>
           <td>{party.id}</td>
           <td>
-            <input type="checkbox" checked={done} onChange={() => handleCheckboxChange()} />
+            {isLoading ? (
+              <Spinner className="checkbox" />
+            ) : (
+              <input type="checkbox" checked={done} onChange={() => handleCheckboxChange()} />
+            )}
           </td>
           <td>{party.name}</td>
           <td>{party.description}</td>

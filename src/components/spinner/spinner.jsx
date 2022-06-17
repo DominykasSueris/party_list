@@ -1,14 +1,14 @@
 import React from "react";
 import "./spinner.css";
 
-const Spiner = () => {
+const Spinner = ({ className }) => {
   return (
     <div>
-      <div className="spinner-border text-dark" role="status">
+      <div className={`spinner-border text-dark ${className}`} role="status">
         <span className="sr-only"></span>
       </div>
     </div>
   );
 };
 
-export default Spiner;
+export default Spinner;

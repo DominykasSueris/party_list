@@ -3,7 +3,7 @@ import axios from "axios";
 import config from "../../services/config.json";
 import PartyList from "../table/partyList";
 import { useLocation } from "react-router-dom";
-import Spiner from "../spinner/spinner";
+import Spinner from "../spinner/spinner";
 
 const Home = () => {
   const [partyList, setPartyList] = useState([]);
@@ -14,12 +14,14 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(config.apiEndPoint, { auth: location.state })
-      .then(res => setPartyList(res.data))
+      .then(res => {
+        setPartyList(res.data);
+        setLoading(false);
+      })
       .catch(error => console.log(error));
-    setLoading(false);
   }, [location.state]);
 
-  return isLoading ? <Spiner /> : <PartyList partyList={partyList} setPartyList={setPartyList} />;
+  return isLoading ? <Spinner /> : <PartyList partyList={partyList} setPartyList={setPartyList} />;
 };
 
 export default Home;
