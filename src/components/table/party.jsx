@@ -6,13 +6,25 @@ import Form from "../form/form";
 
 const Party = ({ party, partyList, setPartyList }) => {
   const [isEditMode, setEditMode] = useState(false);
+  const [done, setDone] = useState(party.done);
   const location = useLocation();
+  const auth = { auth: location.state };
 
   const deleteParty = partyId => {
     axios
       .delete(`${config.apiEndPoint}/${partyId}`, { auth: location.state })
       .then(setPartyList(partyList.filter(party => party.id !== partyId)))
       .catch(error => console.log(error));
+  };
+
+  const handleCheckboxChange = () => {
+    party.done = !done;
+    axios
+      .put(`${config.apiEndPoint}/${party.id}`, party, auth)
+      .then(response => {
+        setDone(response.data.done);
+      })
+      .catch(error => alert("something went wrong"));
   };
 
   return (
@@ -28,7 +40,7 @@ const Party = ({ party, partyList, setPartyList }) => {
         <tr>
           <td>{party.id}</td>
           <td>
-            <input type="checkbox" value={party.done} />
+            <input type="checkbox" checked={done} onChange={() => handleCheckboxChange()} />
           </td>
           <td>{party.name}</td>
           <td>{party.description}</td>
