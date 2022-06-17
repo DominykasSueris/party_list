@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Input from "./input";
-import { login } from "../services/authService";
-import Error from "../error";
+import { login } from "../../services/authService";
+import Error from "../error/error";
 
 class Login extends Component {
   state = {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import config from "../services/config.json";
+import config from "../../services/config.json";
 import { useLocation } from "react-router-dom";
 import Form from "../form/form";
 

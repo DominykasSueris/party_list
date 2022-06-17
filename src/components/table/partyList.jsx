@@ -5,10 +5,21 @@ import Form from "../form/form";
 import { GoTriangleDown } from "react-icons/go";
 import { GoTriangleUp } from "react-icons/go";
 import "react-datepicker/dist/react-datepicker.css";
-import "../table/table.css";
+import "./partylist.css";
 
-const PartyList = ({ partyList, setPartyList, sorting, isSorted }) => {
+const PartyList = ({ partyList, setPartyList }) => {
   const [isFormVisible, setFormVisible] = useState(false);
+  const [isSorted, setSorting] = useState(false);
+
+  const sorting = () => {
+    const newSorting = !isSorted;
+    setSorting(newSorting);
+    setPartyList(partyList =>
+      partyList.sort((a, b) => {
+        return newSorting ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+      })
+    );
+  };
 
   return (
     <Table bordered striped>

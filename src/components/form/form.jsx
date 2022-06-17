@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import axios from "axios";
-import config from "../services/config.json";
+import config from "../../services/config.json";
 
 const Form = ({ party, backFunction, setPartyList, partyList }) => {
   const newParty = { done: false, name: "", description: "", dueDate: "" };
