@@ -8,7 +8,6 @@ import Spinner from "../spinner/spinner";
 const Home = () => {
   const [partyList, setPartyList] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
   const location = useLocation();
 
   useEffect(() => {
@@ -21,7 +20,11 @@ const Home = () => {
       .catch(error => console.log(error));
   }, [location.state]);
 
-  return isLoading ? <Spinner /> : <PartyList partyList={partyList} setPartyList={setPartyList} />;
+  return isLoading ? (
+    <Spinner className="spinner-border-home" />
+  ) : (
+    <PartyList partyList={partyList} setPartyList={setPartyList} />
+  );
 };
 
 export default Home;
