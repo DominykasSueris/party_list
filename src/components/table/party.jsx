@@ -47,7 +47,7 @@ const Party = ({ party, partyList, setPartyList }) => {
             {isLoading ? (
               <Spinner className="spinner-checkbox" />
             ) : (
-              <input type="checkbox" checked={done} onChange={() => handleCheckboxChange()} />
+              <input type="checkbox" checked={party.done} onChange={() => handleCheckboxChange()} />
             )}
           </td>
           <td>{party.name}</td>

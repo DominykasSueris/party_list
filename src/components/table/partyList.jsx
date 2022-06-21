@@ -7,7 +7,7 @@ import { GoTriangleUp } from "react-icons/go";
 import "react-datepicker/dist/react-datepicker.css";
 import "./partylist.css";
 
-const PartyList = ({ partyList, setPartyList }) => {
+const PartyList = ({ partyList, setPartyList, currentPageList }) => {
   const [isFormVisible, setFormVisible] = useState(false);
   const [isSorted, setSorting] = useState(false);
 
@@ -45,7 +45,7 @@ const PartyList = ({ partyList, setPartyList }) => {
         </tr>
       </thead>
       <tbody>
-        {partyList.map(party => (
+        {currentPageList.map(party => (
           <Party key={party.id} party={party} partyList={partyList} setPartyList={setPartyList} />
         ))}
         {isFormVisible ? (

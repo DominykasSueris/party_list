@@ -50,7 +50,7 @@ const Form = ({ party, backFunction, setPartyList, partyList }) => {
     <tr>
       <td>{party.id}</td>
       <td>
-        <input type="checkbox" checked={done} onClick={() => setDone(!done)} />
+        <input type="checkbox" checked={done} onChange={() => setDone(!done)} />
       </td>
       <td>
         <input onChange={e => setName(e.target.value)} name="name" value={name}></input>
