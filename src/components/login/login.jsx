@@ -30,7 +30,8 @@ const Login = () => {
       <React.Fragment>
         <Redirect
           to={{
-            pathname: "/home"
+            pathname: "/home",
+            state: { username: userName, password: userPassword }
           }}
         />
       </React.Fragment>
