@@ -1,76 +1,65 @@
-import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Input from "./input";
 import { login } from "../../services/authService";
 import Error from "../error/error";
+import React, { useState, useEffect } from "react";
 
-class Login extends Component {
-  state = {
-    account: { username: "", password: "" },
-    isSignedUp: false,
-    error: false
-  };
+const Login = () => {
+  const [userName, setUserName] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [isSignedUp, setSignedUp] = useState(false);
+  const [error, setError] = useState(false);
 
-  handleSubmit = async e => {
+  useEffect(() => {}, [isSignedUp, error, userName, userPassword]);
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    const { account } = this.state;
-    await login(account.username, account.password)
+    await login(userName, userPassword)
       .then(res => {
         if (res.status === 200) {
-          this.setState({ isSignedUp: true, isLoading: false });
+          setSignedUp(true);
         }
       })
       .catch(error => {
-        this.setState({ error: true });
+        setError(true);
       });
   };
 
-  handleChange = ({ currentTarget: input }) => {
-    const account = { ...this.state.account };
-    account[input.name] = input.value;
-    this.setState({ account });
-  };
-
-  render() {
-    const { account, isSignedUp } = this.state;
-
-    if (isSignedUp) {
-      return (
-        <React.Fragment>
-          <Redirect
-            to={{
-              pathname: "/home",
-              state: { username: account.username, password: account.password }
-            }}
+  if (isSignedUp) {
+    return (
+      <React.Fragment>
+        <Redirect
+          to={{
+            pathname: "/home"
+          }}
+        />
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <div>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          {error === true ? <Error /> : null}
+          <Input
+            name="username"
+            label="username"
+            value={userName}
+            onChange={e => setUserName(e.target.value)}
+            type="text"
           />
-        </React.Fragment>
-      );
-    } else {
-      return (
-        <div>
-          <h1>Login</h1>
-          <form onSubmit={this.handleSubmit}>
-            {this.state.error === true ? <Error /> : null}
-            <Input
-              name="username"
-              label="username"
-              value={account.username}
-              onChange={this.handleChange}
-              type="text"
-            />
-            <Input
-              name="password"
-              label="password"
-              value={account.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-            <button className="btn btn-primary">Login</button>
-          </form>
-        </div>
-      );
-    }
+          <Input
+            name="password"
+            label="password"
+            value={userPassword}
+            onChange={e => setUserPassword(e.target.value)}
+            type="password"
+          />
+          <button className="btn btn-primary">Login</button>
+        </form>
+      </div>
+    );
   }
-}
+};
 
 export default Login;
