@@ -1,16 +1,24 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 
 const NavBar = () => {
-  const { isSignedUp, userName } = useContext(UserContext);
+  const { isSignedUp, setSignedUp, userName } = useContext(UserContext);
+
+  const logout = () => {
+    setSignedUp(!isSignedUp);
+    console.log("clicked");
+    console.log(isSignedUp);
+  };
+
   if (isSignedUp) {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
         <div>{userName}</div>
         <div>
-          <a className="nav-link active" aria-current="page" href="/">
+          <Link onClick={logout} className="nav-link active" aria-current="page" to="/home">
             Logout
-          </a>
+          </Link>
         </div>
       </nav>
     );
@@ -18,12 +26,12 @@ const NavBar = () => {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="navbar-nav">
-          <a className="nav-link active" aria-current="page" href="/register">
+          <Link className="nav-link active" aria-current="page" to="/register">
             Register
-          </a>
-          <a className="nav-link active" aria-current="page" href="/login">
+          </Link>
+          <Link className="nav-link active" aria-current="page" to="/login">
             Login
-          </a>
+          </Link>
         </div>
       </nav>
     );
