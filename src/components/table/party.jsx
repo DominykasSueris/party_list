@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import config from "../../services/config.json";
-import { useLocation } from "react-router-dom";
+import { UserContext } from "../../App";
 import Spinner from "../spinner/spinner";
 import Form from "../form/form";
 
 const Party = ({ party, partyList, setPartyList }) => {
+  const { userName, userPassword } = useContext(UserContext);
   const [isEditMode, setEditMode] = useState(false);
   const [done, setDone] = useState(party.done);
   const [isLoading, setLoading] = useState(false);
-  const location = useLocation();
-  const auth = { auth: location.state };
+  const auth = { auth: { username: userName, password: userPassword } };
 
   const deleteParty = partyId => {
     axios
-      .delete(`${config.apiEndPoint}/${partyId}`, { auth: location.state })
+      .delete(`${config.apiEndPoint}/${partyId}`, auth)
       .then(setPartyList(partyList.filter(party => party.id !== partyId)))
       .catch(error => console.log(error));
   };

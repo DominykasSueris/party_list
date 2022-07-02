@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../App";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import config from "../../services/config.json";
 
 const Form = ({ party, backFunction, setPartyList, partyList }) => {
+  const { userName, userPassword } = useContext(UserContext);
   const newParty = { done: false, name: "", description: "", dueDate: "" };
   const isEdit = !!party;
   party = party ? party : newParty;
@@ -21,8 +22,7 @@ const Form = ({ party, backFunction, setPartyList, partyList }) => {
     party.dueDate = date;
   }, [party, done, name, description, date]);
 
-  const location = useLocation();
-  const auth = { auth: location.state };
+  const auth = { auth: { username: userName, password: userPassword } };
 
   const save = () => {
     if (isEdit) {
