@@ -6,10 +6,10 @@ import Input from "./input";
 import Error from "../error/error";
 
 const Login = () => {
-  const userContext = useContext(UserContext);
+  const { setUserName, setSignedUp, setUserPassword, isSignedUp } = useContext(UserContext);
 
-  const [userName, setUserName] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [userName, setUserFormName] = useState("");
+  const [userPassword, setUserFormPassword] = useState("");
   const [error, setError] = useState(false);
 
   const handleSubmit = async e => {
@@ -17,9 +17,9 @@ const Login = () => {
     await login(userName, userPassword)
       .then(res => {
         if (res.status === 200) {
-          userContext.setUserName(userName);
-          userContext.setSignedUp(true);
-          userContext.setUserPassword(userPassword);
+          setUserName(userName);
+          setSignedUp(true);
+          setUserPassword(userPassword);
         }
       })
       .catch(error => {
@@ -27,7 +27,7 @@ const Login = () => {
       });
   };
 
-  if (userContext.isSignedUp) {
+  if (isSignedUp) {
     return (
       <React.Fragment>
         <Redirect
@@ -47,14 +47,14 @@ const Login = () => {
             name="username"
             label="username"
             value={userName}
-            onChange={e => setUserName(e.target.value)}
+            onChange={e => setUserFormName(e.target.value)}
             type="text"
           />
           <Input
             name="password"
             label="password"
             value={userPassword}
-            onChange={e => setUserPassword(e.target.value)}
+            onChange={e => setUserFormPassword(e.target.value)}
             type="password"
           />
           <button className="btn btn-primary">Login</button>
