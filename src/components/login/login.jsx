@@ -1,23 +1,25 @@
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router";
-import Input from "./input";
 import { login } from "../../services/authService";
+import { UserContext } from "../../App";
+import Input from "./input";
 import Error from "../error/error";
-import React, { useState, useEffect } from "react";
 
 const Login = () => {
+  const userContext = useContext(UserContext);
+
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [isSignedUp, setSignedUp] = useState(false);
   const [error, setError] = useState(false);
-
-  useEffect(() => {}, [isSignedUp, error, userName, userPassword]);
 
   const handleSubmit = async e => {
     e.preventDefault();
     await login(userName, userPassword)
       .then(res => {
         if (res.status === 200) {
-          setSignedUp(true);
+          userContext.setUserName(userName);
+          userContext.setSignedUp(true);
+          userContext.setUserPassword(userPassword);
         }
       })
       .catch(error => {
@@ -25,13 +27,12 @@ const Login = () => {
       });
   };
 
-  if (isSignedUp) {
+  if (userContext.isSignedUp) {
     return (
       <React.Fragment>
         <Redirect
           to={{
-            pathname: "/home",
-            state: { username: userName, password: userPassword }
+            pathname: "/home"
           }}
         />
       </React.Fragment>
