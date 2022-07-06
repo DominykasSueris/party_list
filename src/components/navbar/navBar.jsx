@@ -5,18 +5,17 @@ import { UserContext } from "../../App";
 const NavBar = () => {
   const { isSignedUp, setSignedUp, userName } = useContext(UserContext);
 
-  const logout = () => {
-    setSignedUp(!isSignedUp);
-    console.log("clicked");
-    console.log(isSignedUp);
-  };
-
   if (isSignedUp) {
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
         <div>{userName}</div>
         <div>
-          <Link onClick={logout} className="nav-link active" aria-current="page" to="/home">
+          <Link
+            onClick={() => setSignedUp(false)}
+            className="nav-link active"
+            aria-current="page"
+            to="/login"
+          >
             Logout
           </Link>
         </div>
