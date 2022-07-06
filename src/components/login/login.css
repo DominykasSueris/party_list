@@ -1,0 +1,14 @@
+.btn-primary {
+  margin-top: 12px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group {
+  width: 30%;
+}

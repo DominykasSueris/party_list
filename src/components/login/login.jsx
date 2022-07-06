@@ -4,6 +4,7 @@ import { login } from "../../services/authService";
 import { UserContext } from "../../App";
 import Input from "./input";
 import Error from "../error/error";
+import "../login/login.css";
 
 const Login = () => {
   const { setUserName, setSignedUp, setUserPassword, isSignedUp } = useContext(UserContext);
@@ -40,19 +41,19 @@ const Login = () => {
   } else {
     return (
       <div>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
+          <h1>Login</h1>
           {error === true ? <Error /> : null}
           <Input
             name="username"
-            label="username"
+            label="Username"
             value={userName}
             onChange={e => setUserFormName(e.target.value)}
             type="text"
           />
           <Input
             name="password"
-            label="password"
+            label="Password"
             value={userPassword}
             onChange={e => setUserFormPassword(e.target.value)}
             type="password"
