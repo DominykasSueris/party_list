@@ -1,5 +1,7 @@
 import React, { useState, createContext } from "react";
 import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./components/navbar/navBar";
 import Login from "./components/login/login";
 import Home from "./components/home/home";
@@ -18,6 +20,7 @@ const App = () => {
         value={{ isSignedUp, setSignedUp, userName, setUserName, userPassword, setUserPassword }}
       >
         <NavBar />
+        <ToastContainer />
         <main className="container">
           <Switch>
             <Route path="/home" component={Home}></Route>

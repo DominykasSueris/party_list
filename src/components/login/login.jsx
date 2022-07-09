@@ -2,12 +2,19 @@ import React, { useState, useContext } from "react";
 import { Redirect } from "react-router";
 import { login } from "../../services/authService";
 import { UserContext } from "../../App";
+import { toast } from "react-toastify";
 import Input from "./input";
 import Error from "../error/error";
 import "../login/login.css";
 
 const Login = () => {
   const { setUserName, setSignedUp, setUserPassword, isSignedUp } = useContext(UserContext);
+  const notify = () =>
+    toast.success("Logged in successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+      hideProgressBar: true
+    });
 
   const [userName, setUserFormName] = useState("");
   const [userPassword, setUserFormPassword] = useState("");
@@ -21,6 +28,7 @@ const Login = () => {
           setUserName(userName);
           setSignedUp(true);
           setUserPassword(userPassword);
+          notify();
         }
       })
       .catch(error => {
