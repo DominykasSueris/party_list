@@ -1,9 +1,22 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
+import { toast } from "react-toastify";
 
 const NavBar = () => {
-  const { isSignedUp, setSignedUp, userName } = useContext(UserContext);
+  const { isSignedUp, setSignedUp, userName, setUserName, setUserPassword } =
+    useContext(UserContext);
+
+  const logout = () => {
+    setSignedUp(false);
+    setUserName("");
+    setUserPassword("");
+    toast.success("Logged Out", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 3000,
+      hideProgressBar: true
+    });
+  };
 
   if (isSignedUp) {
     return (
@@ -11,7 +24,7 @@ const NavBar = () => {
         <div>{userName}</div>
         <div>
           <Link
-            onClick={() => setSignedUp(false)}
+            onClick={() => logout()}
             className="nav-link active"
             aria-current="page"
             to="/login"
