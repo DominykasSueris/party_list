@@ -11,6 +11,9 @@ const NavBar = () => {
     setSignedUp(false);
     setUserName("");
     setUserPassword("");
+    sessionStorage.removeItem("isSignedUp");
+    sessionStorage.removeItem("userPassword");
+    sessionStorage.removeItem("userName");
     toast.success("Logged Out", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 3000,

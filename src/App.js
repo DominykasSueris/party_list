@@ -10,9 +10,9 @@ import "./App.css";
 export const UserContext = createContext();
 
 const App = () => {
-  const [isSignedUp, setSignedUp] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [isSignedUp, setSignedUp] = useState(sessionStorage.getItem("isSignedUp"));
+  const [userName, setUserName] = useState(sessionStorage.getItem("userName"));
+  const [userPassword, setUserPassword] = useState(sessionStorage.getItem("userPassword"));
 
   return (
     <React.Fragment>

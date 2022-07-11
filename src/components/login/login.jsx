@@ -9,12 +9,6 @@ import "../login/login.css";
 
 const Login = () => {
   const { setUserName, setSignedUp, setUserPassword, isSignedUp } = useContext(UserContext);
-  const notify = () =>
-    toast.success("Logged in successfully", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 3000,
-      hideProgressBar: true
-    });
 
   const [userName, setUserFormName] = useState("");
   const [userPassword, setUserFormPassword] = useState("");
@@ -25,10 +19,17 @@ const Login = () => {
     await login(userName, userPassword)
       .then(res => {
         if (res.status === 200) {
-          setUserName(userName);
           setSignedUp(true);
+          setUserName(userName);
           setUserPassword(userPassword);
-          notify();
+          sessionStorage.setItem("userName", userName);
+          sessionStorage.setItem("userPassword", userPassword);
+          sessionStorage.setItem("isSignedUp", true);
+          toast.success("Logged in successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 3000,
+            hideProgressBar: true
+          });
         }
       })
       .catch(error => {
