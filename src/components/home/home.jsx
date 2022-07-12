@@ -12,11 +12,10 @@ import "../home/home.css";
 const Home = () => {
   const userContext = useContext(UserContext);
   const [partyList, setPartyList] = useState([]);
+  const [filteredPartyList, setFilteredPartyList] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [list, setList] = useState([]);
-
-  const [filter, setFilter] = useState("false");
-  const [filterValue, setFilterValue] = useState("");
+  const [filterValue, setFilterValue] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 8;
@@ -34,44 +33,33 @@ const Home = () => {
   }, [userContext]);
 
   useEffect(() => {
-    setList(paginate(partyList, currentPage, pageSize));
-  }, [partyList, currentPage, pageSize]);
+    setList(paginate(filteredPartyList, currentPage, pageSize));
+  }, [partyList, currentPage, pageSize, filteredPartyList]);
 
-  const handleFilter = () => {
-    setFilter(!filter);
-  };
-
-  const handleFilterSubmit = e => {
-    e.preventDefault();
-    console.log("Submited");
+  const filerList = filterValue => {
+    setFilterValue(filterValue);
+    const list = partyList.filter(
+      l =>
+        l.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+        l.description.toLowerCase().includes(filterValue.toLowerCase())
+    );
+    setFilteredPartyList(list);
   };
 
   return isLoading ? (
     <Spinner className="spinner-border-home" />
   ) : (
     <React.Fragment>
-      {filter ? (
-        <form className="filter-form" onSubmit={handleFilterSubmit}>
-          <Input
-            name="filter"
-            label=""
-            value={filterValue}
-            onChange={e => setFilterValue(e.target.value)}
-            type="text"
-          />
-          <button className="btn btn-warning">Submit</button>
-          <button className="btn btn-warning" onClick={handleFilter}>
-            Back
-          </button>
-        </form>
-      ) : (
-        <button className="btn btn-primary" onClick={handleFilter}>
-          Filter
-        </button>
-      )}
-      <PartyList partyList={partyList} currentPageList={list} setPartyList={setPartyList} />
+      <Input
+        name="filter"
+        label=""
+        value={filterValue}
+        onChange={e => filerList(e.target.value)}
+        type="text"
+      />
+      <PartyList partyList={filteredPartyList} currentPageList={list} setPartyList={setPartyList} />
       <Pagination
-        itemsCount={partyList.length}
+        itemsCount={filteredPartyList.length}
         currentPage={currentPage}
         pageSize={pageSize}
         onPageChange={currentPage => setCurrentPage(currentPage)}
