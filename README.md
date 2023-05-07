@@ -8,7 +8,7 @@
 
 ## General info
 
- Party list app created with React.js and Bootstrap. Functional table with availability to add , delete ,adjust name, mark quest as arrived, also adjust guest information and sort list by alphabet. User has to be logged in with authentical credentials to have a control on the list. 
+Party list app created with React.js and Bootstrap. Functional table with availability to add , delete ,adjust name, mark quest as arrived, also adjust guest information and sort list by alphabet. User has to be logged in with authentical credentials to have a control on the list. 
 
 ## Technologies
 Project is created with:
@@ -20,7 +20,7 @@ Project is created with:
 ## Setup
 To run this project, clone it locally from github:
 
-$ git clone "https://github.com/DominykasSueris/party_list"
+`git clone "https://github.com/DominykasSueris/party_list`
 
 ## Inspiration 
 App idea and functionality are quite similart and inspired from "to-do-list" apps.
